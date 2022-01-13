@@ -7,7 +7,7 @@ namespace Prachi_More_Teladoc_Challenge
     [SetUpFixture]
     public class Setup
     {
-        public static IWebDriver driver = new ChromeDriver(@"C:\Prachi_More_Teladoc_Challenge\Prachi_More_Teladoc_Challenge\Driver\v97.0");
+        public static IWebDriver driver = new ChromeDriver(@"C:\Prachi_More_Teladoc_Challenge\Prachi_More_Teladoc_Challenge\Driver\v97.0");       
 
         [OneTimeSetUp]
         public void Startup()

@@ -1,15 +1,57 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.PageObjects;
 using TechTalk.SpecFlow;
-
 
 namespace Prachi_More_Teladoc_Challenge.PageObjects
 {
     public class LandingPage
     {
+        //Web Elements 
+        #region WebElements
+        [FindsBy(How=How.ClassName, Using ="btn-link")]
+        public IWebElement addUserBtn = null;
+
+        [FindsBy(How = How.Name, Using = "FirstName")]
+        public IWebElement firstName = null;
+
+        [FindsBy(How = How.Name, Using = "LastName")]
+        public IWebElement lastName = null;
+
+        [FindsBy(How = How.Name, Using = "UserName")]
+        public IWebElement userName = null;
+
+        [FindsBy(How = How.Name, Using = "Password")]
+        public IWebElement password = null;
+
+        [FindsBy(How = How.Name, Using = "optionsRadios")]
+        public IList<IWebElement> radioBtns = null;
+
+        [FindsBy(How = How.XPath, Using = "//td/label")]
+        public IList<IWebElement> values = null;
+
+        [FindsBy(How = How.Name, Using = "RoleId")]
+        public IWebElement dropdown = null;
+
+        [FindsBy(How = How.Name, Using = "Email")]
+        public IWebElement email = null;
+        
+        [FindsBy(How = How.Name, Using = "Mobilephone")]
+        public IWebElement cellPhone = null;       
+
+        [FindsBy(How = How.ClassName, Using = "btn-success")]
+        public IWebElement saveBtn = null;
+        
+        [FindsBy(How = How.XPath, Using = "//tbody/tr")]
+        public IList<IWebElement> rows = null;
+        
+        [FindsBy(How = How.XPath, Using = "//button[contains(text(),'OK')]")]
+        public IWebElement okBtn = null;
+
+        #endregion
+
+        //Actions
         public bool VerifyOnTheSitePage()
         {
             var flag = false;
@@ -20,7 +62,6 @@ namespace Prachi_More_Teladoc_Challenge.PageObjects
             }
             return flag;
         }
-
         public void AddUser(Table userTable)
         {
             var fName = userTable.Rows[0][0].ToString();
@@ -31,25 +72,15 @@ namespace Prachi_More_Teladoc_Challenge.PageObjects
             var role = userTable.Rows[0][5].ToString();
             var emailField = userTable.Rows[0][6].ToString();
             var cPhone = userTable.Rows[0][7].ToString();
-
-
-            IWebElement addUserBtn = Setup.driver.FindElement(By.ClassName("btn-link"));
+           
+            //Click on Add User button
             addUserBtn.Click();
-
-            IWebElement firstName = Setup.driver.FindElement(By.Name("FirstName"));
-            firstName.SendKeys(fName);
-
-            IWebElement lastName = Setup.driver.FindElement(By.Name("LastName"));
-            lastName.SendKeys(lName);
-
-            IWebElement userName = Setup.driver.FindElement(By.Name("UserName"));
-            userName.SendKeys(uName);
-
-            IWebElement password = Setup.driver.FindElement(By.Name("Password"));
-            password.SendKeys(pwd);
-
-            IList<IWebElement> radioBtns = Setup.driver.FindElements(By.Name("optionsRadios"));
-            IList<IWebElement> values = Setup.driver.FindElements(By.XPath("//td/label"));
+            
+            //Add user details
+            firstName.SendKeys(fName);            
+            lastName.SendKeys(lName);            
+            userName.SendKeys(uName);            
+            password.SendKeys(pwd);            
 
             for (int i=0;i<radioBtns.Count;i++)
             {
@@ -63,20 +94,16 @@ namespace Prachi_More_Teladoc_Challenge.PageObjects
             SelectElement selectEle = new SelectElement(Setup.driver.FindElement(By.Name("RoleId")));
             selectEle.SelectByText(role);
 
-            IWebElement email = Setup.driver.FindElement(By.Name("Email"));
-            email.SendKeys(emailField);
-
-            IWebElement cellPhone = Setup.driver.FindElement(By.Name("Mobilephone"));
+            email.SendKeys(emailField);            
             cellPhone.SendKeys(cPhone);
-
-            IWebElement saveBtn = Setup.driver.FindElement(By.ClassName("btn-success"));
+            
+            //Click on Save button
             saveBtn.Click();
         }
 
         public bool VerifyUserIsAdded(string userName)
         {
-            var flag = false;
-            IList<IWebElement> rows = Setup.driver.FindElements(By.XPath("//tbody/tr"));
+            var flag = false;            
 
             for (int i = 0; i < rows.Count; i++)
             {
@@ -88,22 +115,21 @@ namespace Prachi_More_Teladoc_Challenge.PageObjects
             }
             return flag;
         }
-
         public bool DeleteUser(string deleteUserName)
         {
             var flag = false;            
-            IList<IWebElement> rows = Setup.driver.FindElements(By.XPath("//tbody/tr"));
 
             for (int i = 0; i <= rows.Count; i++)
             {
                 if (rows[i].Text.Contains(deleteUserName))
                 {
                     var rowValue = i + 1;
-                    IWebElement delete = Setup.driver.FindElement(By.XPath("//tbody/tr[" + rowValue + "]/td[11]/button"));
+                    IWebElement deleteBtn = Setup.driver.FindElement(By.XPath("//tbody/tr[" + rowValue + "]/td[11]/button"));
 
-                    delete.Click();
+                    //Click on 'x' button
+                    deleteBtn.Click();
 
-                    IWebElement okBtn = Setup.driver.FindElement(By.XPath("//button[contains(text(),'OK')]"));
+                    //Click on Ok button                    
                     okBtn.Click();
 
                     flag = true;
@@ -112,11 +138,9 @@ namespace Prachi_More_Teladoc_Challenge.PageObjects
             }
             return flag;
         }
-
         public bool VerifyUserIsDeleted(string deletedUserName)
         {
-            var flag = true;           
-            IList<IWebElement> rows = Setup.driver.FindElements(By.XPath("//tbody/tr"));
+            var flag = true;            
 
             foreach (var row in rows)
             {

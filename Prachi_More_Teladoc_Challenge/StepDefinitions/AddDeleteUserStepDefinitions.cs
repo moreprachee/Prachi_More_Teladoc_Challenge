@@ -7,36 +7,35 @@ namespace Prachi_More_Teladoc_Challenge.StepDefinitions
     [Binding]
     public class AddDeleteUserStepDefinitions
     {
-        LandingPage landingPageObj = new LandingPage();
 
         [Given(@"I am on the site")]
         public void GivenIAmOnTheSite()
         {
-            Assert.IsTrue(landingPageObj.VerifyOnTheSitePage(), "Site not launched");
+            Assert.IsTrue(PageInitialization.LandingPage.VerifyOnTheSitePage(), "Site not launched");
         }
 
         [Then(@"I Add User")]
         public void ThenIAddAUser(Table userTable)
         {
-            landingPageObj.AddUser(userTable);
+            PageInitialization.LandingPage.AddUser(userTable);
         }
 
         [Then(@"I verify username (.*) has been added")]
         public void ThenIVerifyUserHasBeenAdded(string userName)
         {
-            Assert.IsTrue(landingPageObj.VerifyUserIsAdded(userName), "Added user couldn't be found on the page");
+            Assert.IsTrue(PageInitialization.LandingPage.VerifyUserIsAdded(userName), "Added user couldn't be found on the page");
         }
 
         [Then(@"I delete the user with username (.*)")]
         public void ThenIdeleteTheUser(string userName)
         {
-            Assert.IsTrue(landingPageObj.DeleteUser(userName), "User couldn't be deleted");
+            Assert.IsTrue(PageInitialization.LandingPage.DeleteUser(userName), "User couldn't be deleted");
         }
 
         [Then(@"I verify user with username (.*) has been deleted")]
         public void ThenIVerifyUserHasBeenDeleted(string userName)
         {
-            Assert.IsTrue(landingPageObj.VerifyUserIsDeleted(userName), "User couldn't be deleted");
+            Assert.IsTrue(PageInitialization.LandingPage.VerifyUserIsDeleted(userName), "User couldn't be deleted");
         }
     }
 }

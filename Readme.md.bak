@@ -1,7 +1,7 @@
 ﻿# How to execute tests in Visual Studio
 - Pull down code from remote 'Prachi_More_Teladoc_Challenge' branch
 - Open 'Prachi_More_Teladoc_Challenge.sln' in Visual Studio
-- Open Test Explorer window(Test --> Test Explorer)
+- Open Test Explorer window (Test --> Test Explorer)
 - Set Group By setting to filter the tests by 'Traits'
 - Select below two test scenarios and right click on them. Click on 'Run' to execute the test scenarios
   1. Scenario: Add a user and validate the user has been added to the table
